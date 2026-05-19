@@ -25,10 +25,7 @@ fun MainNavigation() {
     ) {
         composable<AppHost.Splash> {
             SplashRoute(
-                goToLandingHost = {
-                    //nav.replace(Landing)
-                },
-                goToDashboardHost = {
+                goToDashboard = {
 
                 }
             )

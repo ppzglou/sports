@@ -1,11 +1,17 @@
+import com.android.build.api.dsl.LibraryExtension
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "gr.sppzglou.sports.presentation"
+
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -13,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -28,10 +34,12 @@ android {
             )
         }
     }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+    kotlin.jvmToolchain(17)
 }
 
 dependencies {
@@ -44,4 +52,11 @@ dependencies {
     implementation(libs.androidx.compose.ui)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.bundles.dagger.hilt)
+    implementation(libs.core.ktx)
+    ksp(libs.hilt.compiler)
+
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
