@@ -1,4 +1,4 @@
-package gr.sppzglou.sports.presentation.screens.splash
+package gr.sppzglou.sports.presentation.screens.dash
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +13,10 @@ import gr.sppzglou.sports.presentation.utils.str
 
 
 @Composable
-fun SplashScreen() {
+fun DashboardScreen() {
     Box(Modifier.fillMaxSize()) {
         AppText(
-            str(R.string.splash, LettersFormat.Uppercase),
+            str(R.string.dashboard, LettersFormat.Uppercase),
             Modifier.align(Alignment.Center),
             style = AppTheme.typography.h1,
         )

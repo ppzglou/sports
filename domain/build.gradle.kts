@@ -3,6 +3,8 @@ import com.android.build.api.dsl.LibraryExtension
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 configure<LibraryExtension> {
@@ -42,4 +44,7 @@ configure<LibraryExtension> {
 dependencies {
 
     implementation(libs.core.ktx)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }

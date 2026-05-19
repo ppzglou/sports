@@ -3,6 +3,8 @@ import com.android.build.api.dsl.LibraryExtension
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 configure<LibraryExtension> {
@@ -29,7 +31,16 @@ configure<LibraryExtension> {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BaseUrl", "\"https://ios-kaizen.github.io/MockSports/\"")
         }
+
+        debug {
+            buildConfigField("String", "BaseUrl", "\"https://ios-kaizen.github.io/MockSports/\"")
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     compileOptions {
@@ -42,4 +53,8 @@ configure<LibraryExtension> {
 dependencies {
     implementation(project(":domain"))
     implementation(libs.core.ktx)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.bundles.retrofit)
 }

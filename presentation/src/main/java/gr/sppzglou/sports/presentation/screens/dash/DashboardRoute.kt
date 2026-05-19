@@ -1,23 +1,23 @@
-package gr.sppzglou.sports.presentation.screens.splash
+package gr.sppzglou.sports.presentation.screens.dash
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import gr.sppzglou.sports.presentation.screens.base.BaseRoute
 import gr.sppzglou.sports.presentation.screens.base.on
 import gr.sppzglou.sports.presentation.screens.dash.vm.DashboardEffect
-import gr.sppzglou.sports.presentation.screens.splash.vm.SplashVM
+import gr.sppzglou.sports.presentation.screens.dash.vm.DashboardVM
 
 @Composable
-fun SplashRoute(
-    vm: SplashVM = hiltViewModel(),
-    goToDashboard: () -> Unit,
+fun DashboardRoute(
+    vm: DashboardVM = hiltViewModel(),
+    goToFavorites: () -> Unit,
 ) = BaseRoute(
     vm = vm,
     onEffect = {
         it.on<DashboardEffect.NavigateToFavorites> {
-            goToDashboard()
+            goToFavorites()
         }
     }
 ) { data ->
-    SplashScreen()
+    DashboardScreen()
 }

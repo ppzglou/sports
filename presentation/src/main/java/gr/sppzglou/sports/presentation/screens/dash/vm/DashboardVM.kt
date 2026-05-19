@@ -1,4 +1,4 @@
-package gr.sppzglou.sports.presentation.screens.splash.vm
+package gr.sppzglou.sports.presentation.screens.dash.vm
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import gr.sppzglou.sports.domain.FailureWrapper
@@ -9,11 +9,11 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashVM @Inject constructor(
+class DashboardVM @Inject constructor(
 ) : BaseVM<
         EmptyUiState,
         EmptyUiData,
-        SplashEffect
+        DashboardEffect
         >(
     initialState = EmptyUiState()
 ) {
@@ -24,7 +24,7 @@ class SplashVM @Inject constructor(
 
     private fun goToDash() = launch {
         delay(2000)
-        emitEffect(SplashEffect.NavigateToDashboard)
+        emitEffect(DashboardEffect.NavigateToFavorites)
     }
 
     override fun updateData(transform: EmptyUiData.() -> EmptyUiData) = Unit
