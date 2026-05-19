@@ -3,6 +3,6 @@ package gr.sppzglou.sports.domain
 
 interface Repository {
 
-    suspend fun fetchAll()
+    suspend fun fetchAll(): ResultWrapper<Unit>
 
 }
