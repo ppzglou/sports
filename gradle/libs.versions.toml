@@ -24,6 +24,8 @@ hilt = "2.59.2"
 hiltNavigationCompose = "1.2.0"
 retrofit = "3.0.0"
 okhttp = "5.3.2"
+kotlinxSerializationJson = "1.11.0"
+room = "2.7.2"
 
 [libraries]
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
@@ -60,8 +62,14 @@ retrofitGsonConverter = { module = "com.squareup.retrofit2:converter-gson", vers
 #OKHTTP
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttpLoggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+#ROOM
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+roomRuntime = { module = "androidx.room:room-runtime", version.ref = "room" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
 
 [bundles]
+
 dagger-hilt = [
     "hilt-android",
     "hilt-navigation-compose"
@@ -71,6 +79,10 @@ retrofit = [
     "retrofitGsonConverter",
     "okhttp",
     "okhttpLoggingInterceptor"
+]
+room = [
+    "roomRuntime",
+    "roomKtx"
 ]
 
 
