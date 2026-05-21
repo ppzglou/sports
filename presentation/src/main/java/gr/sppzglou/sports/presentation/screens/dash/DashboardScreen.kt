@@ -51,7 +51,7 @@ fun DashboardScreen(
                 onIntent(DashboardIntent.ThemeClicked)
             },
             onFavoritesClick = {
-                onIntent(DashboardIntent.NavigateToFavorites)
+                onIntent(DashboardIntent.FavoritesClicked)
             }
         )
 
@@ -85,7 +85,7 @@ fun DashboardScreen(
                                 SportListItem(
                                     sport = item.sport,
                                     isExpanded = data.extendedItems.contains(item.sport.name),
-                                    item.isFav,
+                                    data.sportFavIds.contains(item.sport.id),
                                     onClick = {
                                         onIntent(DashboardIntent.SportClicked(item.sport.name))
                                     },

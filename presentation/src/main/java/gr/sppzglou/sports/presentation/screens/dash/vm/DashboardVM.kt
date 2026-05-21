@@ -47,8 +47,7 @@ class DashboardVM @Inject constructor(
             is DashboardIntent.ThemeClicked -> onThemeClicked()
             is DashboardIntent.FavoriteClicked -> onFavoriteClicked(intent)
             is DashboardIntent.SportFavoriteClicked -> onSportFavoriteClicked(intent)
-            is DashboardIntent.NavigateToFavorites ->
-                launch { emitEffect(DashboardEffect.NavigateToFavorites) }
+            is DashboardIntent.FavoritesClicked -> onFavoritesClicked()
         }
     }
 
@@ -72,7 +71,7 @@ class DashboardVM @Inject constructor(
                         state.copy(
                             result = success(
                                 DashboardUiData(
-                                    items = flattenSportsEventsList(sports, sportFavIds),
+                                    items = flattenSportsEventsList(sports),
                                     favCount = getFavoriteCounter(sports)
                                 )
                             )
@@ -84,7 +83,7 @@ class DashboardVM @Inject constructor(
                 } else {
                     updateData {
                         copy(
-                            items = flattenSportsEventsList(sports, sportFavIds),
+                            items = flattenSportsEventsList(sports),
                             favCount = getFavoriteCounter(sports)
                         )
                     }
@@ -143,6 +142,19 @@ class DashboardVM @Inject constructor(
             copy(sportFavIds = newList)
         }
 
+    private fun onFavoritesClicked() {
+        val data = getDataOrNull() ?: return
+        val sports = data.items.filterIsInstance<DashboardListItem.Sport>().map { it.sport.id }
+
+        updateData {
+            val newList = if (sportFavIds.size != sports.size) sports
+            else listOf()
+
+            this@DashboardVM.sportFavIds.value = newList
+            copy(sportFavIds = newList)
+        }
+    }
+
 
     private fun startTimer() {
         timerJob?.cancel()
@@ -166,21 +178,21 @@ class DashboardVM @Inject constructor(
         }
     }
 
-    private fun flattenSportsEventsList(sports: List<SportDomain>, sportFavIds: List<String>) =
+    private fun flattenSportsEventsList(sports: List<SportDomain>) =
         buildList {
-        sports.forEach { sport ->
-            add(DashboardListItem.Sport(sport, sportFavIds.contains(sport.id)))
+            sports.forEach { sport ->
+                add(DashboardListItem.Sport(sport))
 
-            sport.events.forEach { event ->
-                add(
-                    DashboardListItem.Event(
-                        sportName = sport.name,
-                        event = event
+                sport.events.forEach { event ->
+                    add(
+                        DashboardListItem.Event(
+                            sportName = sport.name,
+                            event = event
+                        )
                     )
-                )
+                }
             }
         }
-    }
 
     private fun updateData(
         transform: DashboardUiData.() -> DashboardUiData

@@ -26,7 +26,6 @@ sealed interface DashboardListItem {
 
     data class Sport(
         val sport: SportDomain,
-        val isFav: Boolean
     ) : DashboardListItem
 
     data class Event(

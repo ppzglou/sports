@@ -9,6 +9,6 @@ sealed interface DashboardIntent {
 
     data class SportFavoriteClicked(val id: String) : DashboardIntent
 
-    data object NavigateToFavorites : DashboardIntent
+    data object FavoritesClicked : DashboardIntent
 
 }
