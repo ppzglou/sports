@@ -59,4 +59,10 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.room)
     ksp(libs.roomCompiler)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.test:core:1.6.1")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 }

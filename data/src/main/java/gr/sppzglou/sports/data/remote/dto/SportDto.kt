@@ -6,7 +6,7 @@ data class SportDto(
     @SerializedName("i")
     val id: String,
     @SerializedName("d")
-    val name: String,
+    val name: String?,
     @SerializedName("e")
-    var events: List<EventDto>
+    var events: List<EventDto>?
 )

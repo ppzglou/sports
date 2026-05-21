@@ -178,22 +178,6 @@ class DashboardVM @Inject constructor(
         }
     }
 
-    private fun flattenSportsEventsList(sports: List<SportDomain>) =
-        buildList {
-            sports.forEach { sport ->
-                add(DashboardListItem.Sport(sport))
-
-                sport.events.forEach { event ->
-                    add(
-                        DashboardListItem.Event(
-                            sportName = sport.name,
-                            event = event
-                        )
-                    )
-                }
-            }
-        }
-
     private fun updateData(
         transform: DashboardUiData.() -> DashboardUiData
     ) {
@@ -205,3 +189,19 @@ class DashboardVM @Inject constructor(
         )
     }
 }
+
+internal fun flattenSportsEventsList(sports: List<SportDomain>) =
+    buildList {
+        sports.forEach { sport ->
+            add(DashboardListItem.Sport(sport))
+
+            sport.events.forEach { event ->
+                add(
+                    DashboardListItem.Event(
+                        sportName = sport.name,
+                        event = event
+                    )
+                )
+            }
+        }
+    }

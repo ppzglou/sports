@@ -8,7 +8,7 @@ data class EventDto(
     @SerializedName("si")
     val sportId: String,
     @SerializedName("d")
-    val competitor: String,
+    val competitor: String?,
     @SerializedName("tt")
-    val time: Long
+    val time: Long?
 )
