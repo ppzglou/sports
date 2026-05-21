@@ -8,8 +8,8 @@ interface Repository {
 
     suspend fun fetchAll(): ResultWrapper<Unit>
 
-    suspend fun updateFavorites(eventIds: List<String>, isFav: Boolean): Unit
+    suspend fun updateFavorite(eventId: String): Unit
 
-    fun getSports(): Flow<List<SportDomain>>
+    fun getSports(sportFavIds: List<String>): Flow<List<SportDomain>>
 
 }

@@ -5,6 +5,10 @@ sealed interface DashboardIntent {
 
     data object ThemeClicked : DashboardIntent
 
-    data class FavoriteClicked(val ids: List<String>, val flag: Boolean) : DashboardIntent
+    data class FavoriteClicked(val id: String) : DashboardIntent
+
+    data class SportFavoriteClicked(val id: String) : DashboardIntent
+
+    data object NavigateToFavorites : DashboardIntent
 
 }

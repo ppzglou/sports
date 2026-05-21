@@ -23,14 +23,13 @@ class RepositoryImpl @Inject constructor(
             local.insertEvents(entities.flatMap { it.second })
         }
 
-    override suspend fun updateFavorites(eventIds: List<String>, isFav: Boolean) {
-        local.updateFavorite(eventIds, isFav)
+    override suspend fun updateFavorite(eventId: String) {
+        local.updateFavorite(eventId)
     }
 
-    override fun getSports(): Flow<List<SportDomain>> =
-        local.getSports().map {
-            it.map { it.toDomain() }
+    override fun getSports(sportFavIds: List<String>): Flow<List<SportDomain>> =
+        local.getSports(sportFavIds).map {
+            it.toDomain()
         }
-
 
 }

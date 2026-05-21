@@ -15,6 +15,7 @@ data class DashboardUiState(
 data class DashboardUiData(
     val items: List<DashboardListItem> = listOf(),
     val extendedItems: List<String> = listOf(),
+    val sportFavIds: List<String> = listOf(),
     val currentTime: Long = 0L,
     val theme: AppTheme.Mode = AppTheme.Mode.System,
     val favCount: Int = 0

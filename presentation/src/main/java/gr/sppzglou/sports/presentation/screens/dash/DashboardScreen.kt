@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import gr.sppzglou.sports.domain.ResultWrapper
 import gr.sppzglou.sports.presentation.components.ShimmerEffect
 import gr.sppzglou.sports.presentation.screens.dash.components.EventListItem
+import gr.sppzglou.sports.presentation.screens.dash.components.NoFavoriteEventsView
 import gr.sppzglou.sports.presentation.screens.dash.components.SportListItem
 import gr.sppzglou.sports.presentation.screens.dash.components.Toolbar
 import gr.sppzglou.sports.presentation.screens.dash.vm.DashboardIntent
@@ -48,6 +49,9 @@ fun DashboardScreen(
             favoriteCount = favCounter,
             onThemeClick = {
                 onIntent(DashboardIntent.ThemeClicked)
+            },
+            onFavoritesClick = {
+                onIntent(DashboardIntent.NavigateToFavorites)
             }
         )
 
@@ -87,13 +91,15 @@ fun DashboardScreen(
                                     },
                                     onFavoriteClick = {
                                         onIntent(
-                                            DashboardIntent.FavoriteClicked(
-                                                item.sport.events.map { it.id },
-                                                !item.isFav
-                                            )
+                                            DashboardIntent.SportFavoriteClicked(item.sport.id)
                                         )
                                     },
                                 )
+                            }
+                            if (item.sport.events.isEmpty()) {
+                                item {
+                                    NoFavoriteEventsView(item.sport.name)
+                                }
                             }
                         }
 
@@ -108,10 +114,7 @@ fun DashboardScreen(
                                         nowMillis = data.currentTime,
                                         onFavoriteClick = {
                                             onIntent(
-                                                DashboardIntent.FavoriteClicked(
-                                                    listOf(item.event.id),
-                                                    !item.event.isFav
-                                                )
+                                                DashboardIntent.FavoriteClicked(item.event.id)
                                             )
                                         },
                                     )

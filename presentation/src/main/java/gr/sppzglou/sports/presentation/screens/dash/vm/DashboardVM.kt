@@ -3,9 +3,9 @@ package gr.sppzglou.sports.presentation.screens.dash.vm
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import gr.sppzglou.sports.domain.cases.ChangeFavoritesUC
 import gr.sppzglou.sports.domain.cases.FetchDataUC
 import gr.sppzglou.sports.domain.cases.GetSportsFlowUC
+import gr.sppzglou.sports.domain.cases.SwitchFavoriteUC
 import gr.sppzglou.sports.domain.models.SportDomain
 import gr.sppzglou.sports.domain.success
 import gr.sppzglou.sports.presentation.screens.base.BaseVM
@@ -13,6 +13,8 @@ import gr.sppzglou.sports.presentation.theme.AppTheme
 import gr.sppzglou.sports.presentation.utils.PrefsDataStore
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.lang.System.currentTimeMillis
@@ -23,7 +25,7 @@ class DashboardVM @Inject constructor(
     private val dataStore: PrefsDataStore,
     private val fetchDataUC: FetchDataUC,
     private val getSportsFlowUC: GetSportsFlowUC,
-    private val changeFavoritesUC: ChangeFavoritesUC
+    private val switchFavoriteUC: SwitchFavoriteUC
 ) : BaseVM<
         DashboardUiState,
         DashboardUiData,
@@ -32,6 +34,7 @@ class DashboardVM @Inject constructor(
     initialState = DashboardUiState()
 ) {
     private var timerJob: Job? = null
+    private val sportFavIds = MutableStateFlow<List<String>>(listOf())
 
     init {
         observeTheme()
@@ -43,6 +46,9 @@ class DashboardVM @Inject constructor(
             is DashboardIntent.SportClicked -> onSportClicked(intent)
             is DashboardIntent.ThemeClicked -> onThemeClicked()
             is DashboardIntent.FavoriteClicked -> onFavoriteClicked(intent)
+            is DashboardIntent.SportFavoriteClicked -> onSportFavoriteClicked(intent)
+            is DashboardIntent.NavigateToFavorites ->
+                launch { emitEffect(DashboardEffect.NavigateToFavorites) }
         }
     }
 
@@ -57,32 +63,34 @@ class DashboardVM @Inject constructor(
     }
 
     private fun observeSports() = launch {
-        getSportsFlowUC().collect { sports ->
-            if (sports.isEmpty()) {
-                fetchData()
-            } else if (getDataOrNull() == null) {
-                setState { state ->
-                    state.copy(
-                        result = success(
-                            DashboardUiData(
-                                items = flattenSportsEventsList(sports),
-                                favCount = getFavoriteCounter(sports)
+        sportFavIds.collectLatest { sportFavIds ->
+            getSportsFlowUC(sportFavIds).collect { sports ->
+                if (sports.isEmpty()) {
+                    fetchData()
+                } else if (getDataOrNull() == null) {
+                    setState { state ->
+                        state.copy(
+                            result = success(
+                                DashboardUiData(
+                                    items = flattenSportsEventsList(sports, sportFavIds),
+                                    favCount = getFavoriteCounter(sports)
+                                )
                             )
                         )
-                    )
-                }
-                if (timerJob?.isActive != true) {
-                    startTimer()
-                }
-            } else {
-                updateData {
-                    copy(
-                        items = flattenSportsEventsList(sports),
-                        favCount = getFavoriteCounter(sports)
-                    )
-                }
-                if (timerJob?.isActive != true) {
-                    startTimer()
+                    }
+                    if (timerJob?.isActive != true) {
+                        startTimer()
+                    }
+                } else {
+                    updateData {
+                        copy(
+                            items = flattenSportsEventsList(sports, sportFavIds),
+                            favCount = getFavoriteCounter(sports)
+                        )
+                    }
+                    if (timerJob?.isActive != true) {
+                        startTimer()
+                    }
                 }
             }
         }
@@ -123,8 +131,18 @@ class DashboardVM @Inject constructor(
     }
 
     private fun onFavoriteClicked(intent: DashboardIntent.FavoriteClicked) = launch {
-        changeFavoritesUC(intent.ids, intent.flag)
+        switchFavoriteUC(intent.id)
     }
+
+    private fun onSportFavoriteClicked(intent: DashboardIntent.SportFavoriteClicked) =
+        updateData {
+            val newList = if (sportFavIds.contains(intent.id)) sportFavIds - intent.id
+            else sportFavIds + intent.id
+
+            this@DashboardVM.sportFavIds.value = newList
+            copy(sportFavIds = newList)
+        }
+
 
     private fun startTimer() {
         timerJob?.cancel()
@@ -148,9 +166,10 @@ class DashboardVM @Inject constructor(
         }
     }
 
-    private fun flattenSportsEventsList(sports: List<SportDomain>) = buildList {
+    private fun flattenSportsEventsList(sports: List<SportDomain>, sportFavIds: List<String>) =
+        buildList {
         sports.forEach { sport ->
-            add(DashboardListItem.Sport(sport, !sport.events.any { !it.isFav }))
+            add(DashboardListItem.Sport(sport, sportFavIds.contains(sport.id)))
 
             sport.events.forEach { event ->
                 add(

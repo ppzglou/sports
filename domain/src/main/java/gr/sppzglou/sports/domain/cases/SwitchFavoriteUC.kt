@@ -3,9 +3,9 @@ package gr.sppzglou.sports.domain.cases
 import gr.sppzglou.sports.domain.Repository
 import javax.inject.Inject
 
-class GetSportsFlowUC @Inject constructor(
+class SwitchFavoriteUC @Inject constructor(
     private val repo: Repository,
 ) {
-    operator fun invoke(sportFavIds: List<String>) =
-        repo.getSports(sportFavIds)
+    suspend operator fun invoke(id: String) =
+        repo.updateFavorite(id)
 }
