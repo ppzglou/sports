@@ -16,12 +16,19 @@ enum class LettersFormat {
 @Composable
 fun str(
     @StringRes id: Int,
+    vararg args: String,
     format: LettersFormat = LettersFormat.Unchanged,
 ): String {
     val txt = stringResource(id)
 
-    return remember(txt, format) {
-        textFormat(txt, format)
+    return remember(txt, format, args.contentHashCode()) {
+        val formatted = if (args.isNotEmpty()) {
+            String.format(txt, *args)
+        } else {
+            txt
+        }
+
+        textFormat(formatted, format)
     }
 }
 

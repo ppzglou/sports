@@ -26,10 +26,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import gr.sppzglou.sports.presentation.R
 import gr.sppzglou.sports.presentation.components.AppText
 import gr.sppzglou.sports.presentation.components.appClick
 import gr.sppzglou.sports.presentation.theme.AppTheme
 import gr.sppzglou.sports.presentation.theme.AppThemeProvider
+import gr.sppzglou.sports.presentation.utils.str
 
 @Composable
 fun Toolbar(
@@ -85,7 +87,7 @@ fun Toolbar(
             ) {
 
                 AppText(
-                    text = "Welcome back 👋",
+                    text = str(R.string.welcome_back),
                     style = AppTheme.typography.caption.copy(
                         AppTheme.colors.textSecondary
                     )

@@ -17,8 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import gr.sppzglou.sports.presentation.R
 import gr.sppzglou.sports.presentation.components.AppText
 import gr.sppzglou.sports.presentation.theme.AppTheme
+import gr.sppzglou.sports.presentation.utils.str
 
 @Composable
 fun NoFavoriteEventsView(sportName: String) {
@@ -48,7 +50,7 @@ fun NoFavoriteEventsView(sportName: String) {
         Spacer(Modifier.height(AppTheme.spacing.md))
 
         AppText(
-            text = "No favourite events",
+            text = str(R.string.no_favourite_events),
             style = AppTheme.typography.h4.copy(
                 color = AppTheme.colors.textPrimary
             ),
@@ -57,7 +59,7 @@ fun NoFavoriteEventsView(sportName: String) {
         Spacer(Modifier.height(AppTheme.spacing.xs))
 
         AppText(
-            text = "There are no favourite events for $sportName yet",
+            text = str(R.string.no_favourite_events_for_sport, sportName),
             style = AppTheme.typography.caption.copy(
                 color = AppTheme.colors.textSecondary
             ),

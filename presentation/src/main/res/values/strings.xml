@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Sports</string>
-    <string name="splash">splash</string>
-    <string name="dashboard">dashboard</string>
+
+    <string name="vs">VS</string>
+    <string name="expired">Expired</string>
+    <string name="starts_in">Starts in %s</string>
+
+    <string name="no_favourite_events">No favourite events</string>
+    <string name="no_favourite_events_for_sport">
+        There are no favourite events for %s yet
+    </string>
+
+    <string name="welcome_back">Welcome back 👋</string>
 </resources>

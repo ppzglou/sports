@@ -27,11 +27,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import gr.sppzglou.sports.domain.models.EventDomain
+import gr.sppzglou.sports.presentation.R
 import gr.sppzglou.sports.presentation.components.AppText
 import gr.sppzglou.sports.presentation.components.appClick
 import gr.sppzglou.sports.presentation.theme.AppTheme
 import gr.sppzglou.sports.presentation.theme.AppThemeProvider
 import gr.sppzglou.sports.presentation.utils.LettersFormat
+import gr.sppzglou.sports.presentation.utils.str
 import gr.sppzglou.sports.presentation.utils.textFormat
 import java.util.concurrent.TimeUnit
 
@@ -71,7 +73,7 @@ fun EventListItem(
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 AppText(
-                    text = "VS",
+                    text = str(R.string.vs),
                     style = AppTheme.typography.caption.copy(
                         color = AppTheme.colors.textPlaceholder,
                     ),
@@ -120,8 +122,8 @@ fun EventListItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AppText(
-                    text = if (hasExpired) "Expired"
-                    else "Starts in ${remainingMillis.toCountdownText()}",
+                    text = if (hasExpired) str(R.string.expired)
+                    else str(R.string.starts_in, remainingMillis.toCountdownText()),
                     style = AppTheme.typography.caption.copy(
                         color = if (hasExpired) AppTheme.colors.error
                         else AppTheme.colors.countdown
