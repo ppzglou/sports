@@ -60,12 +60,12 @@ fun SportListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(AppTheme.shapes.xlPlus)
+                .clip(AppTheme.shapes.xxl)
                 .background(AppTheme.colors.surface)
                 .border(
                     width = 1.dp,
                     color = AppTheme.colors.divider,
-                    shape = AppTheme.shapes.xlPlus
+                    shape = AppTheme.shapes.xxl
                 )
                 .appClick {
                     onClick()

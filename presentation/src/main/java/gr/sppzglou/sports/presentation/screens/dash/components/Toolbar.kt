@@ -93,7 +93,7 @@ fun Toolbar(
                     )
                 )
 
-                Spacer(Modifier.height(2.dp))
+                Spacer(Modifier.height(AppTheme.spacing.xxs))
 
                 AppText(
                     text = username,
@@ -148,14 +148,14 @@ fun Toolbar(
                         onFavoritesClick()
                     }
                     .padding(
-                        horizontal = 14.dp,
-                        vertical = 10.dp
+                        horizontal = AppTheme.spacing.mdPlus,
+                        vertical = AppTheme.spacing.md
                     )
             ) {
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
                 ) {
 
                     Icon(

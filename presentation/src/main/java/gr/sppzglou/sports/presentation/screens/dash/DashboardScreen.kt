@@ -69,7 +69,7 @@ fun DashboardScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(70.dp)
-                            .clip(AppTheme.shapes.xlPlus)
+                            .clip(AppTheme.shapes.xxl)
                     )
                 }
             }

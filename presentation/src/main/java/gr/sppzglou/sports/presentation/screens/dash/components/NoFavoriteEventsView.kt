@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
@@ -27,16 +26,16 @@ fun NoFavoriteEventsView(sportName: String) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
+            .clip(AppTheme.shapes.xxl)
             .background(AppTheme.colors.surface)
             .border(
                 width = 1.dp,
                 color = AppTheme.colors.divider,
-                shape = RoundedCornerShape(18.dp)
+                shape = AppTheme.shapes.xxl
             )
             .padding(
-                horizontal = 20.dp,
-                vertical = 28.dp
+                horizontal = AppTheme.spacing.lgPlus,
+                vertical = AppTheme.spacing.xl
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

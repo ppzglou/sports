@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
@@ -51,14 +50,14 @@ fun EventListItem(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp))
+            .clip(AppTheme.shapes.xxl)
             .background(AppTheme.colors.surface)
             .border(
                 width = 1.dp,
                 color = AppTheme.colors.divider,
-                shape = RoundedCornerShape(18.dp)
+                shape = AppTheme.shapes.xxl
             )
-            .padding(14.dp)
+            .padding(AppTheme.spacing.lg)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -77,7 +76,7 @@ fun EventListItem(
                     style = AppTheme.typography.caption.copy(
                         color = AppTheme.colors.textPlaceholder,
                     ),
-                    modifier = Modifier.padding(horizontal = 10.dp)
+                    modifier = Modifier.padding(horizontal = AppTheme.spacing.md)
                 )
 
                 textFormat(sport, LettersFormat.Uppercase).iconRes()?.let {
@@ -102,7 +101,7 @@ fun EventListItem(
             )
         }
 
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(AppTheme.spacing.md))
 
         Row(
             Modifier.fillMaxWidth(),
@@ -118,7 +117,10 @@ fun EventListItem(
                                 else AppTheme.colors.countdown
                                 ).copy(alpha = 0.12f)
                     )
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                    .padding(
+                        horizontal = AppTheme.spacing.mdPlus,
+                        vertical = AppTheme.spacing.xsPlus
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AppText(
