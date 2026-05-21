@@ -19,5 +19,8 @@ fun DashboardRoute(
         }
     }
 ) { data ->
-    DashboardScreen()
+    DashboardScreen(
+        data,
+        vm::onIntent
+    )
 }

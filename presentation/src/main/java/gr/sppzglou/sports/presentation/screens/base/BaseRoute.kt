@@ -3,14 +3,14 @@ package gr.sppzglou.sports.presentation.screens.base
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import gr.sppzglou.sports.domain.ResultWrapper
 
 
 @Composable
 fun <S : BaseUiState<D>, D : BaseUiData, E : BaseEffect> BaseRoute(
     vm: BaseVM<S, D, E>,
     onEffect: (E) -> Unit = {},
-    loadingView: @Composable () -> Unit = {},
-    screen: @Composable (data: D) -> Unit,
+    screen: @Composable (data: ResultWrapper<D>) -> Unit,
 ) {
     val state by vm.uiState.collectAsStateWithLifecycle()
 
@@ -18,5 +18,5 @@ fun <S : BaseUiState<D>, D : BaseUiData, E : BaseEffect> BaseRoute(
         onEffect(it)
     }
 
-    state.data?.let { screen(it) } ?: loadingView()
+    screen(state.result)
 }

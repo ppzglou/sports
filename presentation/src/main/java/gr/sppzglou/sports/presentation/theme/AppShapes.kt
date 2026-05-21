@@ -17,6 +17,7 @@ data class AppShapes(
     val md: RoundedCornerShape,
     val lg: RoundedCornerShape,
     val xl: RoundedCornerShape,
+    val xlPlus: RoundedCornerShape,
     val xxl: RoundedCornerShape,
 )
 
@@ -25,5 +26,6 @@ val DefaultAppShapes = AppShapes(
     md = RoundedCornerShape(8.dp),
     lg = RoundedCornerShape(12.dp),
     xl = RoundedCornerShape(16.dp),
+    xlPlus = RoundedCornerShape(22.dp),
     xxl = RoundedCornerShape(24.dp),
 )

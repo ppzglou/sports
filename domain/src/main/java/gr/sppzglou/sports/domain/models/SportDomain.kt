@@ -3,6 +3,5 @@ package gr.sppzglou.sports.domain.models
 data class SportDomain(
     val id: String,
     val name: String,
-    val events: List<EventDomain>,
-    val isFav: Boolean = false
+    val events: List<EventDomain>
 )

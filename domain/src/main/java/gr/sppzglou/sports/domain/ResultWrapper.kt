@@ -26,6 +26,9 @@ sealed class ResultWrapper<out T> {
             }
     }
 
+    val inProgress: Boolean
+        get() = this is Loading
+
     val isSuccess: Boolean
         get() = this is Success
 

@@ -6,23 +6,27 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-
-const val THEME_MODE = "THEME_MODE"
-
-enum class ThemeMode {
-    Dark,
-    Light,
-    System,
-}
+import androidx.datastore.preferences.core.stringPreferencesKey
+import gr.sppzglou.sports.presentation.utils.collect
+import gr.sppzglou.sports.presentation.utils.rememberDataStore
 
 @Composable
 fun AppThemeProvider(
+    themeMode: AppTheme.Mode? = null,
     content: @Composable () -> Unit
 ) {
+    val isDarkTheme = when (themeMode) {
+        AppTheme.Mode.Dark -> true
+        AppTheme.Mode.Light -> false
+        AppTheme.Mode.System -> isSystemInDarkTheme()
+        else -> null
+    }
 
-    val colors = if (isDarkTheme()) DarkAppColors else LightAppColors
+    val colors = if (isDarkTheme ?: isDarkTheme()) DarkColors else LightColors
     val typography = provideAppTypography(colors)
 
     CompositionLocalProvider(
@@ -41,27 +45,34 @@ fun AppThemeProvider(
     }
 }
 
-//@Composable
-//fun getThemeMode(): State<ThemeMode> =
-//    rememberDataStore().collect(THEME_MODE, ThemeMode.System.ordinal) {
-//        ThemeMode.entries[it]
-//    }
+@Composable
+fun getThemeMode(): State<AppTheme.Mode> =
+    rememberDataStore().collect(AppTheme.dataStoreKey, AppTheme.Mode.System.name) {
+        AppTheme.Mode.valueOf(it)
+    }
 
 @Composable
 fun isDarkTheme(): Boolean {
-    val theme = ThemeMode.System///by getThemeMode()
+    val theme by getThemeMode()
     val isSystemDark = isSystemInDarkTheme()
     val isDark =
         remember(theme, isSystemDark) {
-            theme == ThemeMode.Dark || (theme == ThemeMode.System && isSystemDark)
+            theme == AppTheme.Mode.Dark || (theme == AppTheme.Mode.System && isSystemDark)
         }
 
     return isDark
 }
 
 object AppTheme {
+    val dataStoreKey = stringPreferencesKey("theme")
 
-    val colors: AppDynamicColors
+    enum class Mode {
+        Dark,
+        Light,
+        System,
+    }
+
+    val colors: AppColors
         @Composable get() = LocalAppColors.current
 
     val typography: AppTypography
@@ -76,9 +87,10 @@ object AppTheme {
 
 @Composable
 fun provideAppTypography(
-    colors: AppDynamicColors
+    colors: AppColors
 ): AppTypography =
     AppTypography(
+
         h1 = BaseAppTypography.h1.copy(
             color = colors.textPrimary
         ),
@@ -98,10 +110,10 @@ fun provideAppTypography(
             color = colors.textPrimary
         ),
         bodyBold = BaseAppTypography.bodyBold.copy(
-            color = colors.textSecondary
+            color = colors.textPrimary
         ),
         caption = BaseAppTypography.caption.copy(
-            color = colors.textPlaceholder
+            color = colors.textSecondary
         ),
         button = BaseAppTypography.button.copy(
             color = colors.background

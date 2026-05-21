@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import gr.sppzglou.sports.data.local.entities.EventEntity
 import gr.sppzglou.sports.data.local.entities.SportEntity
+import gr.sppzglou.sports.data.local.entities.SportWithEvents
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AppDao {
@@ -15,6 +17,9 @@ interface AppDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEvents(events: List<EventEntity>)
 
-    @Query("UPDATE Sports SET isFav = :isFav WHERE id = :id")
-    suspend fun updateFavorite(id: String, isFav: Boolean)
+    @Query("UPDATE Events SET isFav = :isFav WHERE id IN (:eventIds)")
+    suspend fun updateFavorite(eventIds: List<String>, isFav: Boolean)
+
+    @Query("SELECT * FROM Sports")
+    fun getSportsWithEvents(): Flow<List<SportWithEvents>>
 }

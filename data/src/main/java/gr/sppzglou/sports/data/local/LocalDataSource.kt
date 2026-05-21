@@ -16,6 +16,9 @@ class LocalDataSource
     suspend fun insertEvents(events: List<EventEntity>) =
         db.dao().insertEvents(events)
 
-    suspend fun updateFavorite(sportId: String, isFav: Boolean) =
-        db.dao().updateFavorite(sportId, isFav)
+    suspend fun updateFavorite(eventIds: List<String>, isFav: Boolean) =
+        db.dao().updateFavorite(eventIds, isFav)
+
+    fun getSports() =
+        db.dao().getSportsWithEvents()
 }

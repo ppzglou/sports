@@ -16,5 +16,6 @@ fun EventDto.toDomain() = EventDomain(
     sportId = sportId,
     competitor1 = competitor.split("-")[0],
     competitor2 = competitor.split("-")[1],
-    time = time
+    time = time,
+    isFav = false
 )

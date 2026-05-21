@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class SportEntity(
     @PrimaryKey
     val id: String,
-    val name: String,
-    val isFav: Boolean
+    val name: String
 )

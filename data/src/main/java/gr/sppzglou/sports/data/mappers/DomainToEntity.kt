@@ -8,7 +8,6 @@ fun SportDomain.toEntity(): Pair<SportEntity, List<EventEntity>> = Pair(
     SportEntity(
         id = id,
         name = name,
-        isFav = isFav
     ),
     events.map {
         EventEntity(
@@ -16,7 +15,8 @@ fun SportDomain.toEntity(): Pair<SportEntity, List<EventEntity>> = Pair(
             sportId = it.sportId,
             competitor1 = it.competitor1,
             competitor2 = it.competitor2,
-            time = it.time
+            time = it.time,
+            isFav = it.isFav
         )
     }
 )

@@ -10,5 +10,6 @@ data class EventEntity(
     val sportId: String,
     val competitor1: String,
     val competitor2: String,
-    val time: Long
+    val time: Long,
+    val isFav: Boolean
 )
