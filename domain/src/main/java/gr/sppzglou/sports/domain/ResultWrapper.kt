@@ -77,10 +77,9 @@ sealed class FailureWrapper {
     ) : FailureWrapper()
 }
 
-fun FailureWrapper?.getMessage(): String? = when (this) {
+fun FailureWrapper.getMessage(): String = when (this) {
     is FailureWrapper.Message -> this.errorMessage
     is FailureWrapper.Code -> this.errorCode.name
-    else -> null
 }
 
 enum class ErrorCodes {

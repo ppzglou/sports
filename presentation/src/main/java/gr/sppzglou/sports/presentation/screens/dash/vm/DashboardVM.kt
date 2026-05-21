@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import gr.sppzglou.sports.domain.cases.FetchDataUC
 import gr.sppzglou.sports.domain.cases.GetSportsFlowUC
 import gr.sppzglou.sports.domain.cases.SwitchFavoriteUC
+import gr.sppzglou.sports.domain.getMessage
 import gr.sppzglou.sports.domain.models.SportDomain
 import gr.sppzglou.sports.domain.success
 import gr.sppzglou.sports.presentation.screens.base.BaseVM
@@ -55,9 +56,7 @@ class DashboardVM @Inject constructor(
         delay(5000)
         val res = fetchDataUC()
         if (res.isFailure) {
-            updateData {
-                copy(items = items)
-            }
+            emitEffect(DashboardEffect.Error(res.failureError.getMessage()))
         }
     }
 

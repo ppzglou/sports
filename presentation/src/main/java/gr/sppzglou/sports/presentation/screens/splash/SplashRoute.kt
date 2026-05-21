@@ -13,8 +13,8 @@ fun SplashRoute(
     goToDashboard: () -> Unit,
 ) = BaseRoute(
     vm = vm,
-    onEffect = {
-        it.on<SplashEffect.NavigateToDashboard> {
+    onEffect = { _, effect ->
+        effect.on<SplashEffect.NavigateToDashboard> {
             goToDashboard()
         }
     }
