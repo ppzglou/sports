@@ -178,7 +178,11 @@ fun Toolbar(
 @Preview
 @Composable
 private fun PreviewItem() {
-    AppThemeProvider(AppTheme.Mode.Dark) {
+    AppThemeProvider(
+        themeMode = AppTheme.Mode.Dark,
+        maxSize = false,
+        showBG = false
+    ) {
         Toolbar()
     }
 }

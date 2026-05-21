@@ -152,7 +152,11 @@ fun String.iconRes(): Int? {
 @Preview
 @Composable
 private fun PreviewItem() {
-    AppThemeProvider(AppTheme.Mode.Dark) {
+    AppThemeProvider(
+        themeMode = AppTheme.Mode.Dark,
+        maxSize = false,
+        showBG = false
+    ) {
         SportListItem(
             sport = SportDomain(
                 id = "",

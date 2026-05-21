@@ -4,12 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.datastore.preferences.core.stringPreferencesKey
 import gr.sppzglou.sports.presentation.utils.collect
 import gr.sppzglou.sports.presentation.utils.rememberDataStore
@@ -17,6 +19,8 @@ import gr.sppzglou.sports.presentation.utils.rememberDataStore
 @Composable
 fun AppThemeProvider(
     themeMode: AppTheme.Mode? = null,
+    maxSize: Boolean = true,
+    showBG: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val isDarkTheme = when (themeMode) {
@@ -37,8 +41,14 @@ fun AppThemeProvider(
     ) {
         Box(
             Modifier
-                .fillMaxSize()
-                .background(colors.background)
+                .then(
+                    if (maxSize) Modifier.fillMaxSize()
+                    else Modifier.wrapContentSize()
+                )
+                .then(
+                    if (showBG) Modifier.background(colors.background)
+                    else Modifier.background(Color.Transparent)
+                )
         ) {
             content()
         }

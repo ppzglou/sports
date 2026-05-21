@@ -178,7 +178,11 @@ private fun Long.toCountdownText(): String {
 @Preview
 @Composable
 private fun PreviewItem() {
-    AppThemeProvider(AppTheme.Mode.Dark) {
+    AppThemeProvider(
+        themeMode = AppTheme.Mode.Light,
+        maxSize = false,
+        showBG = false
+    ) {
         EventListItem(
             event = EventDomain(
                 id = "",
